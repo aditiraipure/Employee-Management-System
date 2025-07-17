@@ -5,8 +5,8 @@ import React, { useState } from "react";
 const CreateTask = () => {
   const [userData, setUserData] = useContext(AuthContext);
   const updateUser = (newData) => {
-    setUserData(newData); // Update the userData state with the new data
-    localStorage.setItem("employees", JSON.stringify(newData)); // Update localStorage
+    setUserData(newData);
+    localStorage.setItem("employees", JSON.stringify(newData));
   };
 
   const [taskTitle, setTaskTitle] = useState("");
@@ -18,7 +18,6 @@ const CreateTask = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    // build the new task object
     const task = {
       taskTitle,
       description,
@@ -36,7 +35,6 @@ const CreateTask = () => {
       return;
     }
 
-    // clone userData to avoid direct mutation
     const updatedUserData = [...userData];
 
     updatedUserData.forEach((elem) => {
@@ -49,9 +47,8 @@ const CreateTask = () => {
       }
     });
 
-    updateUser(updatedUserData); // <-- update state here
+    updateUser(updatedUserData);
 
-    // clear form fields
     setTaskTitle("");
     setDescription("");
     setDate("");
@@ -62,73 +59,91 @@ const CreateTask = () => {
   };
 
   return (
-    <div className=" p-5  bg-[#1c1c1c] rounded border w-full">
+    <div className="p-8 bg-gradient-to-br from-[#232526] via-[#1c1c1c] to-[#0f2027] rounded-xl  border border-gray-700 shadow-lg w-full max-w-3xl mx-auto ">
       <form
-        onSubmit={(e) => {
-          submitHandler(e);
-        }}
-        className="flex  flex-wrap w-full items-start justify-between "
+        onSubmit={submitHandler}
+        className="flex flex-wrap w-full gap-8 items-start justify-between"
       >
-        <div className="w-1/2">
-          <div className="p-1 rounded-xl w-full max-w-md ">
-            <h2 className="text-xl font-semibold mb-4">📝 Create Task</h2>
+        <div className="w-full md:w-1/2">
+          <div className="mb-6">
+            <h2 className="text-3xl font-bold text-emerald-400 mb-2 flex items-center gap-2">
+              <span role="img" aria-label="note">📝</span> Create Task
+            </h2>
+            <p className="text-gray-400 text-sm">Assign a new task to your team member.</p>
           </div>
-
-          <div>
-            <h3 className="text-sm text-gray-300 mb-o.5"> Task Title</h3>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-300 mb-1" htmlFor="taskTitle">
+              Task Title
+            </label>
             <input
+              id="taskTitle"
               name="taskTitle"
               value={taskTitle}
               onChange={(e) => setTaskTitle(e.target.value)}
-              className="text-sm py-1 px-2 w-4/5 rounded outline-none bg-[#1c1c1c]  border-[1px] border-gray-400 mb-4 "
+              className="text-base py-2 px-3 w-full rounded-lg outline-none bg-[#232526] border border-emerald-400 focus:ring-2 focus:ring-emerald-500 transition"
               type="text"
-              placeholder="UI=design"
+              placeholder="UI Design"
             />
           </div>
-
-          <div>
-            <h3 className="text-sm text-gray-300 mb-o.5">Date</h3>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-300 mb-1" htmlFor="date">
+              Date
+            </label>
             <input
+              id="date"
               name="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="text-sm py-1 px-2 w-4/5 rounded outline-none bg-[#1c1c1c]  border-[1px] border-gray-400 mb-4 "
+              className="text-base py-2 px-3 w-full rounded-lg outline-none bg-[#232526] border border-emerald-400 focus:ring-2 focus:ring-emerald-500 transition"
               type="date"
             />
           </div>
-          <div>
-            <h3 className="text-sm text-gray-300 mb-o.5">Assign to</h3>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-300 mb-1" htmlFor="assignTo">
+              Assign To
+            </label>
             <input
+              id="assignTo"
               name="assignTo"
               value={assignTo}
               onChange={(e) => setAssignTo(e.target.value)}
-              className="text-sm py-1 px-2 w-4/5 rounded outline-none bg-[#1c1c1c] border-[1px] border-gray-400 mb-4 "
+              className="text-base py-2 px-3 w-full rounded-lg outline-none bg-[#232526] border border-emerald-400 focus:ring-2 focus:ring-emerald-500 transition"
               type="text"
               placeholder="Employee name"
             />
           </div>
-          <div>
-            <h3 className="text-sm text-gray-300 mb-o.5">catagory</h3>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-300 mb-1" htmlFor="category">
+              Category
+            </label>
             <input
+              id="category"
               name="category"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="text-sm py-1 px-2 w-4/5 rounded outline-none border-[1px]  bg-[#1c1c1c]  border-gray-400 mb-4 "
+              className="text-base py-2 px-3 w-full rounded-lg outline-none bg-[#232526] border border-emerald-400 focus:ring-2 focus:ring-emerald-500 transition"
               type="text"
-              placeholder="design , dev, etc"
+              placeholder="Design, Dev, etc"
             />
           </div>
         </div>
-        <div className=" w-2/5 flex flex-col items-start ">
-          <h3 className="text-sm text-gray-300 mb-o.5">Description</h3>
+        <div className="w-full md:w-2/5 flex flex-col items-start">
+          <label className="block text-sm font-medium text-gray-300 mb-1" htmlFor="description">
+            Description
+          </label>
           <textarea
+            id="description"
             name="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full h-44 text-sm py-2 px-4 rounded outline-none bg-[#1c1c1c]  border-[1px] border-gray-200"
+            className="w-full h-44 text-base py-3 px-4 rounded-lg outline-none bg-[#232526] border border-emerald-400 focus:ring-2 focus:ring-emerald-500 transition resize-none mb-6"
+            placeholder="Describe the task details here..."
           ></textarea>
-          <button className=" bg-emerald-500 py-3 hover:bg-emerald-600 px-5 rounded-md text-medium mt-4 text-white font-semibold transition-colors duration-300 flex justify-center item-center">
-            Create Task
+          <button
+            className="bg-emerald-500 py-3 px-6 rounded-lg text-lg font-semibold text-white shadow-md hover:bg-emerald-600 transition-colors duration-300 flex items-center gap-2"
+            type="submit"
+          >
+            <span role="img" aria-label="rocket">🚀</span> Create Task
           </button>
         </div>
       </form>

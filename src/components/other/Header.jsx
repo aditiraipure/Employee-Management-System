@@ -1,6 +1,5 @@
 import React from "react";
 
-
 const Header = (props) => {
   const logOutUser = () => {
     localStorage.removeItem("loggedInUser");
@@ -8,17 +7,18 @@ const Header = (props) => {
   };
 
   return (
-    <div className="flex items-end justify-between mt-5">
-      <h1 className="text-2xl font-medium ">
-        Wellcome <br />
-        <span className="text-3xl font-semibold">
-          {props.user?.firstName || "user"}
+    <div className="flex items-center justify-between mt-2 px-8 py-6 shadow-lg">
+      <div>
+        <h1 className="text-3xl font-bold text-white drop-shadow-lg">
+          Welcome,
+        </h1>
+        <span className="text-4xl font-extrabold text-yellow-300 drop-shadow-lg">
+          {props.user?.firstName || "User"}
         </span>
-      </h1>
-    
+      </div>
       <button
         onClick={logOutUser}
-        class=" bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md font-medium"
+        className="bg-white text-red-600 hover:bg-red-600 hover:text-white transition-colors duration-200 px-6 py-3 rounded-lg font-semibold shadow-md border-2 border-red-500"
       >
         Log Out
       </button>
