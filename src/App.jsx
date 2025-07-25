@@ -1,4 +1,3 @@
-
 import { useContext, useEffect, useState } from "react";
 import Login from "./components/Auth/Login";
 import EmployeeDashboard from "./components/Dashboard/EmployeeDashboard";
@@ -21,7 +20,7 @@ const App = () => {
         (task.completed && "completed") ||
         (task.failed && "failed") ||
         "new";
-  
+
       return {
         ...task,
         id: task.id || `${task.title}-${index}`, // generate unique ID if not exists
@@ -29,7 +28,6 @@ const App = () => {
       };
     });
   };
-  
 
   //  Task status update logic
   const updateTaskStatus = (taskId, newStatus) => {
@@ -68,11 +66,16 @@ const App = () => {
   useEffect(() => {
     const loggedInUser = localStorage.getItem("loggedInUser");
     if (loggedInUser) {
-      const userData = JSON.parse(loggedInUser);
-      setUser(userData.role);
-      setLoggedInUserData(userData.data);
-      if (userData.data?.tasks) {
-        setTasks(normalizeTasks(userData.data.tasks));
+      try {
+        const userData = JSON.parse(loggedInUser);
+        setUser(userData.role);
+        setLoggedInUserData(userData.data);
+        if (userData.data?.tasks) {
+          setTasks(normalizeTasks(userData.data.tasks));
+        }
+      } catch (err) {
+        console.error("Invalid JSON in localStorage:", err);
+        localStorage.removeItem("loggedInUser"); // clear the corrupted data
       }
     }
   }, []);
